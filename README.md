@@ -18,7 +18,7 @@ Dgraph's goal is to provide [Google](https://www.google.com) production level sc
 with low enough latency to be serving real-time user queries, over terabytes of structured data.
 Dgraph supports [GraphQL query syntax](https://dgraph.io/docs/master/query-language/), and responds in [JSON](http://www.json.org/) and [Protocol Buffers](https://developers.google.com/protocol-buffers/) over [GRPC](http://www.grpc.io/) and HTTP.
 
-**Use [Discuss Issues](https://discuss.dgraph.io/c/issues/dgraph/38) for reporting issues about this repository.**
+**Use Github issues for reporting issues about this repository.**
 
 ## Status
 
