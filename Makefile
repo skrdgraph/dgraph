@@ -30,7 +30,7 @@ GOPATH         ?= $(shell go env GOPATH)
 all: $(SUBDIRS)
 
 dgraph:
-	GOOS=linux GOARCH=amd64 $(MAKE) -w -C $@ all
+	GOOS=linux $(MAKE) -w -C $@ all
 
 oss:
 	GOOS=linux GOARCH=amd64 $(MAKE) BUILD_TAGS=oss
@@ -64,14 +64,14 @@ test: image-local
 	@$(MAKE) -C t test
 
 image:
-	@GOOS=linux GOARCH=amd64 $(MAKE) dgraph
+	@GOOS=linux $(MAKE) dgraph
 	@mkdir -p linux
 	@mv ./dgraph/dgraph ./linux/dgraph
 	@docker build -f contrib/Dockerfile -t dgraph/dgraph:$(subst /,-,${BUILD_BRANCH}) .
 	@rm -r linux
 
 image-local local-image:
-	@GOOS=linux GOARCH=amd64 $(MAKE) dgraph
+	@GOOS=linux $(MAKE) dgraph
 	@mkdir -p linux
 	@cp ./dgraph/dgraph ./linux/dgraph
 	@docker build -f contrib/Dockerfile -t dgraph/dgraph:local .
