@@ -19,7 +19,6 @@ package testutil
 import (
 	"bytes"
 	"fmt"
-	"go/build"
 	"io"
 	"os"
 	"os/exec"
@@ -128,7 +127,7 @@ func pipelineInternal(cmds [][]string, opts []CmdOpts) (string, error) {
 
 func DgraphBinaryPath() string {
 	// Useful for OSX, as $GOPATH/bin/dgraph is set to the linux binary for docker
-	if dgraphBinary := os.Getenv("DGRAPH_BINARY"); dgraphBinary != "" {
+	/* if dgraphBinary := os.Getenv("DGRAPH_BINARY"); dgraphBinary != "" {
 		return dgraphBinary
 	}
 
@@ -138,7 +137,8 @@ func DgraphBinaryPath() string {
 		gopath = build.Default.GOPATH
 	}
 
-	return os.ExpandEnv(gopath + "/bin/dgraph")
+	return os.ExpandEnv(gopath + "/bin/dgraph") */
+	return "/usr/local/bin/dgraph"
 }
 
 func DetectRaceInZeros(prefix string) bool {
