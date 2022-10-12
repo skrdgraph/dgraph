@@ -156,11 +156,35 @@ func detectRace(prefix string) bool {
 }
 
 func outputLogs(prefix string) {
-	f, err := ioutil.TempFile(".", prefix+"*.log")
+	f, err := ioutil.TempFile("/tmp", prefix+"*.log")
 	x.Check(err)
 	printLogs := func(container string) {
 		in := testutil.GetContainerInstance(prefix, container)
+
+		// Joshua add debugging lines
+		fmt.Println("I am getting container instances")
+		fmt.Printf("prefix is: %s\n", prefix)
+		fmt.Printf("container is: %s\n", container)
+
+		// Joshua
+		// we can throw a docker ps to see containers actually running here
+		showContainers := exec.Command("docker", "ps", "--format", "'{{.Names}}'")
+		containerOutput, err := showContainers.CombinedOutput()
+		fmt.Println("Actual containers running")
+		fmt.Println(string(containerOutput))
+		// Joshua
+
+		// Joshua
+		fmt.Println("Printing in from GetContainerInstance")
+		fmt.Println(in)
+		// Joshua
+
 		c := in.GetContainer()
+		// Joshua
+		fmt.Println("print c, from in.GetContainer")
+		// Joshua
+
+		fmt.Println(c)
 		if c == nil {
 			return
 		}
@@ -168,6 +192,7 @@ func outputLogs(prefix string) {
 		out, err := logCmd.CombinedOutput()
 		x.Check(err)
 		f.Write(out)
+		fmt.Println(string(out))
 		// fmt.Printf("Docker logs for %s is %s with error %+v ", c.ID, string(out), err)
 	}
 	for i := 0; i <= 3; i++ {
@@ -184,11 +209,16 @@ func outputLogs(prefix string) {
 	x.Check(err)
 }
 
+// test123-2 is a prefix string e.g.
 func stopCluster(composeFile, prefix string, wg *sync.WaitGroup, err error) {
 	go func() {
-		if err != nil {
-			outputLogs(prefix)
-		}
+		//if err != nil {
+		//	outputLogs(prefix)
+		//}
+		fmt.Print("The prefix I am shutting down is")
+		fmt.Println(prefix)
+		outputLogs(prefix)
+
 		cmd := command("docker-compose", "--compatibility", "-f", composeFile, "-p", prefix, "down", "-v")
 		cmd.Stderr = nil
 		if err := cmd.Run(); err != nil {
