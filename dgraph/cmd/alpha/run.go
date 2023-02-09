@@ -649,6 +649,7 @@ func run() {
 
 	if keys.AclKey != nil {
 		opts.HmacSecret = keys.AclKey
+		opts.UsePublicKey = keys.UsePublicKey
 		opts.AccessJwtTtl = keys.AclAccessTtl
 		opts.RefreshJwtTtl = keys.AclRefreshTtl
 		glog.Info("ACL secret key loaded successfully.")
@@ -694,6 +695,7 @@ func run() {
 		TLSClientConfig:     tlsClientConf,
 		TLSServerConfig:     tlsServerConf,
 		HmacSecret:          opts.HmacSecret,
+		UsePublicKey:        opts.UsePublicKey,
 		Audit:               opts.Audit != nil,
 		Badger:              bopts,
 	}
