@@ -14,9 +14,6 @@ jobs:
   dgraph-build-amd64:
     runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v3
-        with:
-          ref: '${{ github.event.inputs.releasetag }}'
       - name: Make Dgraph Docker Image
         run: |
           echo "no latest"
